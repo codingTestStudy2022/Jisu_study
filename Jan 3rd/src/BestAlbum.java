@@ -1,6 +1,7 @@
 /*
     2022.01.12 해시 문제 "베스트앨범" Level 3
 
+    ::(더블콜론)은 람다식처럼 함수를 간결하게 사용할 수 있도록 하는 것.
  */
 
 import java.util.*;
@@ -44,29 +45,26 @@ public class BestAlbum {
         }
 
         //장르별 재생수 내림차순 정렬
-        List<Entry<String, Integer>> list_entries = new ArrayList<>(gen_num.entrySet());
+        List<Entry<String, Integer>> list_gen_num = new ArrayList<>(gen_num.entrySet());
 
-        Collections.sort(list_entries, new Comparator<Entry<String, Integer>>(){
+        Collections.sort(list_gen_num, new Comparator<Entry<String, Integer>>(){
             public int compare(Entry<String, Integer> first, Entry<String, Integer> second) {
                 return second.getValue().compareTo(first.getValue());
             }
         });
 
         //각 장르별 가장 높은 값 찾기
-        answer = new int[gen_num.size()*2];
-        int idx = 0;
+        List<Integer> answer_list = new LinkedList<>();
 
-
-
-        for(Entry<String, Integer> entry : list_entries) {
+        for(Entry<String, Integer> entry : list_gen_num) {
             String genre = entry.getKey();
 
-            int[] first = {0, 0};
-            int[] second = {0, 0};
+            int[] first = {-1, -1};   //고유번호, 재생수
+            int[] second = {-1, -1};
 
             for(Entry<Integer, String[]> music_entry : music.entrySet()) {
-                Integer number = music_entry.getKey();
-                String[] value = music_entry.getValue();
+                Integer number = music_entry.getKey();  //고유번호
+                String[] value = music_entry.getValue();    //[장르, 재생수]
 
                 if(value[0].equals(genre)) {
                     int play = Integer.parseInt(value[1]);
@@ -84,10 +82,11 @@ public class BestAlbum {
             }
 
             //정답 작성
-            answer[idx++] = first[0];
-            answer[idx++] = second[0];
-
+            answer_list.add(first[0]);
+            if(second[0] != -1) answer_list.add(second[0]);
         }
+
+        answer = answer_list.stream().mapToInt(Integer::intValue).toArray();
 
         return answer;
     }
