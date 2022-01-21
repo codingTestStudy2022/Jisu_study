@@ -6,7 +6,7 @@ package Candy;
     https://www.acmicpc.net/problem/3955
 
     확장된 유클리드 호제법 유형
-    가이드와 답코드를 보면서 간신히 풀었음..
+    미완료
  */
 
 import java.io.*;
