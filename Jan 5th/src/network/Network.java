@@ -7,7 +7,7 @@ package network;
 
     그래프 유형
     최소신장트리 유형(크루스칼, 프림 알고리즘 둘 중 하나 사용)
-    미완료 : 대체 어떻게 양쪽 끝을 표현하는거야
+    union부분 로직 주의. 여기를 엄청 헷갈렸음.
  */
 
 import java.util.*;
@@ -41,14 +41,14 @@ public class Network {
             v.add(new Vertex(a - 1, b - 1, c));
         }
 
-        //1. 간선 리스트 정렬하기
+        //1. 간선 리스트 정렬하기(우선순위큐를 사용해도 좋음)
         Collections.sort(v);
 
         //2. 간선 순서대로 연결하기
         int sum = 0;
         for(Vertex one : v) {
             if(union(one.a, one.b)) {
-               sum += one.degree;
+                sum += one.degree;
             }
         }
 
@@ -63,7 +63,7 @@ public class Network {
         if(Aparent == Bparent) {
             return false;
         } else{
-            graph[b] = Aparent;
+            graph[Aparent] = Bparent;
             return true;
         }
     }
