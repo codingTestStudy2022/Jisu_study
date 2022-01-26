@@ -72,9 +72,6 @@ public class Almost {
             //다시 최단경로 찾기
             findShortest();
 
-            //초기화
-            reset();
-
             if(distance[dst] == Integer.MAX_VALUE) {
                 bw.append("-1\n");
             } else {
@@ -97,17 +94,16 @@ public class Almost {
         });
 
         //distance 초기화
+        Arrays.fill(distance, Integer.MAX_VALUE);
         distance[start] = 0;
-        for(int i = 1; i < N; i++) {
-            distance[i] = Integer.MAX_VALUE;
-        }
+
         int[] start_node = {start, 0};
         pq.add(start_node);
 
         while(!pq.isEmpty()){
             int[] now = pq.poll();
 
-            if(distance[now[0]] != now[1]) {
+            if(distance[now[0]] < now[1]) {
                 continue;
             }
 
@@ -122,6 +118,9 @@ public class Almost {
                     distance[v.to] = distance[v.from] + v.length;
                     tracking[v.to].clear();
                     tracking[v.to].add(v.from);
+
+                    int[] next = {v.to, distance[v.to]};
+                    pq.add(next);
                 }
                 else if(distance[v.to] == distance[v.from] + v.length) {
                     tracking[v.to].add(v.from);
@@ -142,18 +141,6 @@ public class Almost {
             }
             backTracking(next);
         }
-    }
-
-    static void reset() {
-
-        //flag 초기화
-        for(int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                isShortest[i][j] = false;
-            }
-        }
-
-        //트레킹 초기화
     }
 }
 
