@@ -2,11 +2,14 @@ package almost;
 
 /*
     22.01.25
-    백준 3830번 "교수님은 기다리지 않는다"
-    https://www.acmicpc.net/problem/3830
+    백준 5719번 "거의 최단 경로"
+    https://www.acmicpc.net/problem/5719
 
-    단일 시작, 단일 도착 다익스트라 응용문제
-    미완료
+    다익스트라 응용 문제
+    시간초과의 이유 :
+    backTracking 과정에서 isShortest가 false인 경우에만 재귀를 돌아야함.
+    그렇지 않으면 같은 라인을 반복해서 돌 수 있음.
+
  */
 
 import java.io.*;
@@ -103,7 +106,7 @@ public class Almost {
         while(!pq.isEmpty()){
             int[] now = pq.poll();
 
-            if(distance[now[0]] < now[1]) {
+            if(distance[now[0]] < now[1]) { //
                 continue;
             }
 
@@ -138,8 +141,8 @@ public class Almost {
         for(int next : tracking[now]) {
             if(isShortest[next][now] == false) {
                 isShortest[next][now] = true;
+                backTracking(next);
             }
-            backTracking(next);
         }
     }
 }
