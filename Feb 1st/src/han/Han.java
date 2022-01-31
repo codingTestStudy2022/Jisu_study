@@ -5,8 +5,8 @@ package han;
     백준 1065번 '한수'
     https://www.acmicpc.net/problem/1065
 
-    미해결
-    뭐야?
+    99이하는 무조건 n, 99 이상은 99를 베이스로 들어간다는 것.
+    완전 탐색. 브루트포스(Brute Force) 유형
  */
 
 import java.util.*;
